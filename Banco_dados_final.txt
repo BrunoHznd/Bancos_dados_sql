@@ -1,0 +1,331 @@
+   -- 1° tabela -- 
+create TABLE CLIENTE (
+    cd_cliente CHAR(10) PRIMARY KEY,
+    nm_cliente VARCHAR (100) NOT NULL,
+    cd_telefone_cliente VARCHAR (13) NOT NULL,
+    nm_email_cliente VARCHAR(100) NOT NULL,
+    cd_cpf_cliente CHAR (11) NOT NULL,
+    cd_senha_cliente VARCHAR(100) NOT NULL  
+);
+
+-- 2° tabela -- 
+CREATE TABLE FUNCIONARIO (
+    id_colaborador CHAR(10) PRIMARY KEY,
+    cd_cpf_colaborador CHAR(11) NOT NULL,
+    nm_endereco_colaborador VARCHAR(100) NOT NULL,
+    nm_funcionario VARCHAR(100) NOT NULL,
+    cd_telefone_colaborador CHAR(15) NOT NULL,
+    nm_email_colaborador VARCHAR (100) NOT NULL
+);
+
+
+-- 3° tabela
+CREATE TABLE ATENDENTE (
+	nm_experiencia_atendente VARCHAR(100),
+	hr_entrada_atendente TIME NOT NULL,
+	hr_saida_atendente TIME NOT NULL,
+	vl_salario_atendente NUMERIC(6,2) NOT NULL,
+	id_colaborador CHAR(10),
+	FOREIGN KEY (id_colaborador) REFERENCES FUNCIONARIO (id_colaborador)
+);
+
+
+-- 4° tabela
+CREATE TABLE ENTREGADOR (
+	cd_placa_veiculo_entregador CHAR(7) PRIMARY KEY,
+	nm_tipo_veiculo_entregador VARCHAR(100) NOT NULL,
+	ic_disponibilidade_entregador CHAR(4) CHECK (ic_disponibilidade_entregador IN ('sim', 'nao')),
+	vl_pela_entrega NUMERIC(5,2),
+	qt_entregas_feitas INTEGER,
+	qt_entregas_nao_feitas INTEGER,
+	qt_entregas_total INTEGER,
+	id_colaborador CHAR(10),
+	FOREIGN KEY (id_colaborador) REFERENCES FUNCIONARIO (id_colaborador)
+);
+
+
+-- 5° tabela -- 
+create table COMPLEMENTO (
+    cd_complemento CHAR (10) PRIMARY KEY,
+    vl_complemento NUMERIC(2,2),
+    nm_complemento VARCHAR(100)
+);
+
+
+-- 6° tabela
+CREATE TABLE SORVETE (
+	 cd_sorvete VARCHAR(100) PRIMARY KEY,
+	 nm_sorvete VARCHAR(100) NOT NULL,
+	 qt_sorvete VARCHAR(100) NOT NULL,
+	 dc_sorvete VARCHAR(100) NOT NULL,
+	 vl_sorvete NUMERIC(3,2) NOT NULL	  
+);
+
+-- 7° tabela
+CREATE TABLE BEBIDA (
+	cd_bebida CHAR(10) PRIMARY KEY,
+	nm_bebida VARCHAR(100) NOT NULL,
+	qt_tamanho_bebida VARCHAR(100) NOT NULL,
+	dc_bebida VARCHAR(100) NOT NULL,
+	vl_bebida DECIMAL(10,2) NOT NULL
+);
+
+
+-- 8° tabela --
+CREATE TABLE PRODUTO(	
+	cd_compra CHAR(10) PRIMARY KEY,
+	cd_cliente CHAR(10),
+	FOREIGN KEY (cd_cliente) REFERENCES CLIENTE (cd_cliente),
+	cd_complemento CHAR(10),
+	FOREIGN KEY (cd_complemento) REFERENCES COMPLEMENTO (cd_complemento),
+	cd_sorvete CHAR(10),
+	FOREIGN KEY (cd_sorvete) REFERENCES SORVETE (cd_sorvete),
+	cd_bebida CHAR(10),
+	FOREIGN KEY (cd_bebida) REFERENCES BEBIDA (cd_bebida) 	
+);
+
+
+-- 9° tabela --  
+CREATE TABLE VENDA (
+    id_pedido CHAR(10) PRIMARY KEY,
+    nm_endereco_entrega_venda VARCHAR(100) NOT NULL,
+    vl_taxa_entrega NUMERIC (2,2) NOT NULL,
+    vl_total_pedido NUMERIC(10,2) NOT NULL,
+    ic_forma_pagamento CHAR(15) CHECK (ic_forma_pagamento IN ('cartao','dinheiro','pix')),
+    id_colaborador CHAR (10),
+    FOREIGN KEY (id_colaborador) REFERENCES FUNCIONARIO (id_colaborador),
+    cd_compra CHAR (10),
+    FOREIGN KEY (cd_compra) REFERENCES PRODUTO (cd_compra)
+);
+
+
+-- inserção de valores tabela Cliente 1° tabela
+
+INSERT INTO CLIENTE
+VALUES (0, 'Administrador', '13991742722', 'Admin@email.com', '52884364899', 'admin123');
+INSERT INTO CLIENTE 
+VALUES (1, 'Gyro Zeppeli', '11987654321', 'Gyro.zepelli@gmail.com', '12345678901', 'Johnnyyyyy123');
+INSERT INTO CLIENTE 
+VALUES (2, 'Saitama', '11987654322', 'Saitama@yahoo.com', '98765432100', 'OnePunch123');
+INSERT INTO CLIENTE 
+VALUES (3, 'Goku', '11987654323', 'Goku.oliveira@hotmail.com', '45678912302', 'aquelequecomeuseucu');
+INSERT INTO CLIENTE 
+VALUES (4, 'Kujo jotaro', '11987654324', 'kujo.Jotaro@gmail.com', '32165498703', 'StarPlatinum588');
+INSERT INTO CLIENTE 
+VALUES (5, 'Jonathan Joestar', '11987654325', 'Jonathan.Joestar@outlook.com', '65412378904', 'OverDrive456');
+INSERT INTO CLIENTE 
+VALUES (6, 'Dio Brando', '11987654326', 'Dio.Brando@yahoo.com', '78932145605', 'KOnoDioDAAA');
+INSERT INTO CLIENTE 
+VALUES (7, 'Gon Freecs', '11987654327', 'Gon.Freecs@hotmail.com', '01234567809', 'Leorio8798');
+INSERT INTO CLIENTE 
+VALUES (8, 'Hi Shin', '11987654328', 'Hi.Shin@gmail.com', '10987654321', 'Hyoy654');
+INSERT INTO CLIENTE 
+VALUES (9, 'Johnny Joestar', '11987654329', 'Johnny.Joestar@outlook.com', '65478932108', 'Gyrooooo632');
+INSERT INTO CLIENTE 
+VALUES (10, 'Tecomu nakama', '11987654330', 'Tecomu.Nakama@yahoo.com', '98712365407', 'LaEle0123265');
+INSERT INTO CLIENTE 
+VALUES (11, 'Luffy', '11987654331', 'Luffy@gmail.com', '54321987604', 'GomuGomuNooooo87988');
+INSERT INTO CLIENTE 
+VALUES (12, 'Killua Zoldick', '11987654332', 'killua.zoldick@hotmail.com', '32198765406', 'Iiiilili');
+INSERT INTO CLIENTE 
+VALUES (13, 'Hisoka Morrow', '11987654333', 'Hisoka.Morrow@outlook.com', '87654321905', 'BungeGUM97879889');
+INSERT INTO CLIENTE 
+VALUES (14, 'Eren Pombo', '11987654334', 'Eren.Pombo@gmail.com', '65421987603', 'Tatakae456465');
+INSERT INTO CLIENTE 
+VALUES (15, 'Vegeta', '11987654335', 'Vegeta.oliveira@yahoo.com', '32154387609', 'PrinceSaiaJeans');
+
+
+
+-- inserção de valores tabela FUNCIONARIO 2° tabela
+
+INSERT INTO FUNCIONARIO 
+VALUES (1, '123.456.789-00', 'Rua Exemplo, 123', 'Alan Rodrigues Matias', '(13) 99633-5435', 'AlanMatias@gmail.com');
+INSERT INTO FUNCIONARIO 
+VALUES (2, '987.654.321-00', 'Av. Modelo, 456', 'Bruno oliveira Carvalho', '(13) 99174-2722', 'bruno.carvalho@hotmail.com');
+INSERT INTO FUNCIONARIO 
+VALUES (3, '111.222.333-44', 'Praça Teste, 789', 'Gabriel Rigoni', '(13) 99200-6464', 'GabrielRigone@outlook.com');
+INSERT INTO FUNCIONARIO 
+VALUES (4, '555.666.777-88', 'Alameda Amostra, 101', 'Guilherme Santos', '(13) 97417-1474', 'GuiSantos.@hotmail.com');
+INSERT INTO FUNCIONARIO 
+VALUES (5, '999.888.777-66', 'Avenida Demonstração, 202', 'Juse Liao', '(13) 98123-4332','Juse.liao@gmail.com');
+INSERT INTO FUNCIONARIO 
+VALUES (6, '777.888.999-11', 'Rua dos Exemplos, 345', 'Vitor Marvulle', '(13) 98843-9348', 'VitorMarvulle@.com');
+
+-- inserção de valores tabela Atendente orientação a objetos FUNCIONARIO
+
+INSERT INTO ENTREGADOR 
+VALUES ('ABC1234', 'Motocicleta', 'sim', 3.750, 100, 50, 25, 4);
+INSERT INTO ENTREGADOR 
+VALUES ('DEF5678', 'Bicicleta', 'nao',5.00, 800, 10, 810, 5);
+INSERT INTO ENTREGADOR 
+VALUES ('GHI91011', 'Carro', 'sim', 15, 10, 6, 20, 6);
+
+
+-- inserção de valores entregador orientação a objetos FUNCIONARIO
+
+INSERT INTO ATENDENTE 
+VALUES ('SENIOR', '08:00', '17:00', 7500.00, 1);
+INSERT INTO ATENDENTE 
+VALUES ('JUNIOR', '09:00', '12:00', 10000.00, 2);
+INSERT INTO ATENDENTE 
+VALUES ('JUNIOR', '07:00', '16:00', 8800.00, 3);
+
+-- inserção de valores tabela complemento 
+
+INSERT INTO COMPLEMENTO
+VALUES(000, "0", 'nada');
+INSERT INTO COMPLEMENTO
+VALUES (001, '1,50', 'Granola');
+INSERT INTO COMPLEMENTO
+VALUES (002, '2,00', 'Leite em pó');
+INSERT INTO COMPLEMENTO 
+VALUES (003, '2,50', 'Banana');
+INSERT INTO COMPLEMENTO 
+VALUES (004, '2,00', 'Morango');
+INSERT INTO COMPLEMENTO 
+VALUES (005, '1,00', 'Leite Condensado');
+INSERT INTO COMPLEMENTO 
+VALUES (006, '1,50', 'Amendoim');
+INSERT INTO COMPLEMENTO 
+VALUES (007, '1,50', 'Leite Ninho');
+INSERT INTO COMPLEMENTO 
+VALUES (008, '2,00', 'Castanha do Pará');
+INSERT INTO COMPLEMENTO 
+VALUES (009, '2,50', 'Coco ralado');
+INSERT INTO COMPLEMENTO 
+VALUES (010, '2,00', 'Nutella');
+INSERT INTO COMPLEMENTO 
+VALUES (011, '2,50', 'Granulado de chocolate');
+INSERT INTO COMPLEMENTO 
+VALUES (012, '2,00', 'Mel');
+INSERT INTO COMPLEMENTO 
+VALUES (013, '2,50', 'Geleia de frutas vermelhas');
+INSERT INTO COMPLEMENTO 
+VALUES (014, '1,50', 'Paçoca');
+INSERT INTO COMPLEMENTO 
+VALUES (015, '2,00', 'Uva passa');
+
+
+-- inserção de valores PRODUTO orientada a objetos SORVETES
+INSERT INTO SORVETE
+VALUES(0,'nada',0,'nenhum',0);
+INSERT INTO SORVETE
+VALUE(1, 'Sorvete de Chocolate', '1 bola', 'Sorvete de chocolate belga cremoso', 5.00);
+INSERT INTO SORVETE 
+VALUES(2, 'Sorvete de Morango', '1 bola', 'Delicioso sorvete de morango fresco', 4.50);
+INSERT INTO SORVETE 
+VALUES(3, 'Sorvete de Baunilha', '1 bola', 'Clássico sorvete de baunilha com favas naturais', 4.00);
+INSERT INTO SORVETE
+VALUES(4, 'Sorvete de Pistache', '1 bola', 'Sorvete cremoso de pistache com pedacinhos de nozes', 5.50);
+INSERT INTO SORVETE 
+VALUES(5, 'Sorvete de Coco', '1 bola', 'Refrescante sorvete de coco com pedaços de coco fresco', 4.00);
+INSERT INTO SORVETE
+VALUES(6, 'Sorvete de Limão', '1 bola', 'Sorvete refrescante de limão siciliano', 4.50);
+INSERT INTO SORVETE
+VALUES(7, 'Sorvete de Creme com Calda de Caramelo', '1 bola', 'Delicioso sorvete de creme com calda de caramelo', 5.50);
+INSERT INTO SORVETE
+VALUES(8, 'Sorvete de Amendoim', '1 bola', 'Sorvete cremoso de amendoim com pedaços crocantes', 5.00);
+INSERT INTO SORVETE
+VALUES(9, 'Sorvete de Café', '1 bola', 'Sorvete aromático de café com grãos moídos', 4.50);
+INSERT INTO SORVETE
+VALUES(10, 'Sorvete de Manga', '1 bola', 'Sorvete tropical de manga madura', 4.50);
+INSERT INTO SORVETE
+VALUES(11, 'Sorvete de Frutas Vermelhas', '1 bola', 'Sorvete refrescante de frutas vermelhas da estação', 5.00);
+INSERT INTO SORVETE
+VALUES(12, 'Sorvete de Cookies', '1 bola', 'Sorvete de cookies com pedaços crocantes de biscoitos', 5.50);
+INSERT INTO SORVETE
+VALUES(13, 'Sorvete de Maracujá', '1 bola', 'Sorvete tropical de maracujá fresco', 4.00);
+INSERT INTO SORVETE
+VALUES(14, 'Sorvete de Doce de Leite', '1 bola', 'Sorvete cremoso de doce de leite argentino', 5.00);
+INSERT INTO SORVETE
+VALUES(15, 'Sorvete de Abacaxi com Hortelã', '1 bola', 'Sorvete refrescante de abacaxi com toque de hortelã', 4.50);
+
+
+
+
+-- inserção de valores tabela PRODUTO 4° tabela orientada a objetos BEBIDAS
+
+INSERT INTO BEBIDA
+VALUES (50, 'Coca-Cola', '350ml', 'Refrigerante de cola clássico', 7.50);
+INSERT INTO BEBIDA
+VALUES (51, '51 é Pinga', '450ml', '51 é Pinga Mundial é meu cacete', 19.51);
+INSERT INTO BEBIDA
+VALUES (52, 'Fanta Laranja', '350ml', 'Refrigerante de laranja com sabor intenso', 7.75);
+INSERT INTO BEBIDA
+VALUES (53, 'Guaraná Antarctica', '350ml', 'Refrigerante brasileiro com sabor de guaraná', 8.00);
+INSERT INTO BEBIDA 
+VALUES (54, 'Schweppes Citrus', '350ml', 'Refrigerante cítrico com bolhas refrescantes', 7.99);
+INSERT INTO BEBIDA
+VALUES (55, 'Suco de Laranja Natural', '300ml', 'Suco fresco e natural de laranja', 6.50);
+INSERT INTO BEBIDA 
+VALUES (56, 'Suco de Maçã', '300ml', 'Suco puro e refrescante de maçã', 6.25);
+INSERT INTO BEBIDA
+VALUES (57, 'Suco de Morango', '300ml', 'Suco delicioso e doce de morango', 6.75);
+INSERT INTO BEBIDA
+VALUES (58, 'Suco de Abacaxi com Hortelã', '300ml', 'Suco tropical de abacaxi com um toque refrescante de hortelã', 7.00);
+INSERT INTO BEBIDA
+VALUES (59, 'Suco de Uva Integral', '300ml', 'Suco concentrado e nutritivo de uva', 7.25);
+INSERT INTO BEBIDA
+VALUES (60, 'Mojito', '250ml', 'Coquetel refrescante de rum, hortelã, limão e água com gás', 10.99);
+INSERT INTO BEBIDA
+VALUES (61, 'Margarita', '250ml', 'Coquetel cítrico de tequila, licor de laranja e suco de limão', 9.50);
+INSERT INTO BEBIDA
+VALUES (62, 'Martini de Maçã', '200ml', 'Coquetel sofisticado de vodka premium e suco de maçã', 12.75);
+INSERT INTO BEBIDA 
+VALUES (63, 'Daiquiri de Morango', '250ml', 'Coquetel tropical de rum, suco de limão e morangos frescos', 11.25);
+INSERT INTO BEBIDA
+VALUES (64, 'Piña Colada', '300ml', 'Coquetel cremoso de rum, leite de coco e suco de abacaxi', 13.99);
+INSERT INTO BEBIDA 
+VALUES (65, 'nenhum', '0ml', 'nada', 0);
+
+-- inserção de valores tabela produto sem orientação a objetos
+
+INSERT INTO PRODUTO 
+VALUES (10,1,1,5,52);
+INSERT INTO PRODUTO
+ VALUES (20,2,2,6,54);
+INSERT INTO PRODUTO 
+VALUES (30,3,3,8,51);
+INSERT INTO PRODUTO
+VALUES (40,4,6,15,55);
+INSERT INTO PRODUTO 
+VALUES (50,5,7,9,54);
+INSERT INTO PRODUTO 
+VALUES (60,6,8,6,61);
+INSERT INTO PRODUTO 
+VALUES (70,7,1,10,58);
+INSERT INTO PRODUTO 
+VALUES (80,8,0,4,55);
+INSERT INTO PRODUTO 
+VALUES (90,9,6,15,56);
+INSERT INTO PRODUTO 
+VALUES (100,10,8,14,55);
+
+
+
+-- inserção de valores tabela VENDA
+
+INSERT INTO VENDA 
+VALUES (1, 'Rua Exemplo', 12, 50.00,'cartao', 1, 10 );
+INSERT INTO VENDA 
+VALUES (2, 'Av. Modelo', 4, 40.00,'dinheiro', 1, 20);
+INSERT INTO VENDA 
+VALUES (3, 'Praça Teste', 7, 60.00,'pix', 2, 30);
+INSERT INTO VENDA 
+VALUES (4, 'Alameda Amostra', 10, 70.00,'cartao', 2, 40);
+INSERT INTO VENDA 
+VALUES (5, 'Avenida Demonstração', 20, 50.50,'dinheiro', 2, 50);
+INSERT INTO VENDA 
+VALUES (6, 'Rua Principal', 3, 6.50,'cartao', 2, 60);
+INSERT INTO VENDA 
+VALUES (7, 'Av. Central', 6, 4.50,'cartao', 1, 70);
+INSERT INTO VENDA 
+VALUES (8, 'Praça dos Sonhos', 9, 80.00,'dinheiro', 2, 80);
+INSERT INTO VENDA 
+VALUES (9, 'Rua dos Exemplos', 7, 70.50, 'cartao', 2, 90);
+INSERT INTO VENDA 
+VALUES (11, 'Praça das Testagens', 13, 50.00,'pix', 1, 100);
+
+
+
+
